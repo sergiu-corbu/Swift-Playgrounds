@@ -1,28 +1,27 @@
- import UIKit
- import Foundation
- 
- enum Type {
-    case Software
-    case Automotive
-    case SystemAdmin
-    case AeroSpatial
- }
- 
- enum Sex {
-    case Male
-    case Female
- }
- 
- enum Occupation {
-    case Doctor
-    case Student
-    case Engineer(type: Type)
-    case Retired
-    case Athlete
- }
- 
-class Person {
+import Foundation
 
+enum EngineerType {
+    case software
+    case automotive
+    case systemAdmin
+    case aeroSpatial
+}
+
+enum Sex {
+    case male
+    case female
+}
+
+enum Occupation {
+    case doctor
+    case student
+    case engineer(type: EngineerType)
+    case retired
+    case athlete
+}
+
+class Person {
+    
     var firstName: String
     var lastName: String
     var age: Int
@@ -30,13 +29,13 @@ class Person {
     var descendants: [Person]
     var occupation: Occupation?
     
-    init(_firstName: String, _lastName: String, _age: Int, _sex: Sex, _descendants: [Person], _occupation: Occupation) {
-        self.firstName = _firstName
-        self.lastName = _lastName
-        self.age = _age
-        self.sex = _sex
-        self.descendants = _descendants
-        self.occupation = _occupation
+    init(firstName: String, lastName: String, age: Int, sex: Sex, descendants: [Person], occupation: Occupation?) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.age = age
+        self.sex = sex
+        self.descendants = descendants
+        self.occupation = occupation
     }
     
     var fullName: String {
@@ -45,10 +44,10 @@ class Person {
     
     var description: String {
         if descendants.count > 0{
-            return "\(firstName.capitalized) is a \(age) year old \(sex) \(occupation) and has \(descendants.count) sons."
+            return "\(firstName.capitalized) is a \(age) year old \(sex) \(occupation!) and has \(descendants.count) sons."
         }
         else{
-            return "\(firstName.capitalized) is a \(age) year old \(sex) \(occupation) and doesn't have any sons."
+            return "\(firstName.capitalized) is a \(age) year old \(sex) \(occupation!) and doesn't have any sons."
         }
     }
     
@@ -56,59 +55,10 @@ class Person {
         return descendants.filter({ $0.age >= 18}).map({$0.firstName})
     }
     
-    func addBaby(firstName: String, sex: Sex){
-        let baby = Person(_firstName: "", _lastName: "", _age: 0, _sex: Sex.Female, _descendants: [], _occupation: <#Occupation#>)
-        baby.firstName = firstName
-        baby.sex = sex
-        baby.lastName = lastName
+    func addBaby(firstName: String, sex: Sex) {
+        let baby = Person(firstName: firstName, lastName: self.lastName, age: 0, sex: sex, descendants: [], occupation: occupation)
         descendants.append(baby)
     }
-    
- }
- 
- class FamilyTree {
-    var firstAncestor: Person
-    
-    init(_firstAncestor: Person) {
-        self.firstAncestor = _firstAncestor
-    }
-
-    func familyMembers() -> [String] {
-        var members: [String] = [firstAncestor.fullName]
-
-        for member in 0..<firstAncestor.descendants.count {
-            members.append(firstAncestor.descendants[member].fullName)
-        }
-      //  members.append(firstAncestor.descendants.map({$0.fu}))
-        return members
-    }
-    
-    /*func findIndividual(firstName: String) -> String {
-        let members = familyMembers()
-        print("Enter the person's first name or last name: ")
-        let data = readLine()
-        for member in members{
-            if member.contains(data!){
-                return member
-            }
-        }
-        return "the person does not exist"
-    }*/
-    func showDescendants(person: Person) -> [Person] {
-        var result: [Person] = []
-        for member in 0..<person.descendants.count{
-            result.append(person.descendants[member])
-        }
-        return result
-    }
-    /*func shwoMembersWithOccupation() -> [String] {
-        var result = firstAncestor.descendants.filter({$0.occupation?.rawValue != ""}).map({$0.firstName})
-        return result
-    }*/
- }
- 
- 
- extension Person {
     
     func search(value: String) -> Person? {
         if value == self.firstName || value == self.lastName {
@@ -122,15 +72,54 @@ class Person {
         }
         return nil
     }
- }
+    
+}
 
+class FamilyTree {
+    var firstAncestor: Person
+    
+    init(_firstAncestor: Person) {
+        self.firstAncestor = _firstAncestor
+    }
+    
+    func familyMembers() -> [String] {
+        var members: [String] = [firstAncestor.fullName]
+        
+        for member in 0..<firstAncestor.descendants.count {
+            members.append(firstAncestor.descendants[member].fullName)
+        }
+        //  members.append(firstAncestor.descendants.map({$0.fu}))
+        return members
+    }
+    
+    func showDescendants() -> String {
+        var result = "Descendants for \(firstAncestor.fullName): "
+        if !firstAncestor.descendants.isEmpty {
+            result += "{ " + firstAncestor.descendants.map{($0.fullName)}.joined(separator: ", ") + " }"
+        }
+        return result
+    }
+    /*
+     func shwoMembersWithOccupation() -> [String] {
+     var result = firstAncestor.descendants.filter({$0.occupation?.rawValue != ""}).map({$0.firstName})
+     return result
+     }*/
+}
 
- var person0 = Person(_firstName: "Jim", _lastName: "Mac", _age: 19, _sex: .Male, _descendants: [], _occupation: .Athlete)
- 
- var person1 = Person(_firstName: "Tom", _lastName: "Green", _age: 43, _sex: .Male, _descendants: [person0], _occupation: .Athlete)
- 
- var fam1 = FamilyTree(_firstAncestor: person1)
- 
- //print(person1.description)
+var person0 = Person(firstName: "Jim", lastName: "Mac", age: 19, sex: .male, descendants: [], occupation: .athlete)
 
- print(fam1.familyMembers())
+var person1 = Person(firstName: "Tom", lastName: "Green", age: 43, sex: .male, descendants: [person0], occupation: .doctor)
+
+var fam1 = FamilyTree(_firstAncestor: person1)
+
+//print(person1.adultSons)
+// print(fam1.familyMembers())
+
+let search = person1.search(value: "Jim")
+//print(search)
+
+person0.addBaby(firstName: "mia", sex: .female)
+//print(person0.descendants)
+//print(fam1.familyMembers())
+print(fam1.showDescendants())
+
