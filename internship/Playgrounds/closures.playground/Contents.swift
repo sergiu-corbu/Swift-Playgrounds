@@ -1,6 +1,58 @@
-import UIKit
+import Foundation
 
-// basic closure
+//MARK: Intro
+/*
+ - closures enable defining a group of code statements that can be called as one unit
+ - unlike functions, closures can be defined inline
+ - it accepts input and output
+ - can be stored as properties and local variables
+ - can be passed as arguments to function
+ - can capture and store references 
+ */
+
+struct IntToStringConvertor {
+    // a closure property that takes an Int as input
+    var body: (Int) -> String
+}
+
+//a closure defined as an inline variable with takes no input and produces an Int as output
+let intProvider: () -> Int = { return 1}
+
+//a closure function argument that has no input or output
+func performOperation(then closure: () -> Void) {
+    //code here
+}
+
+extension String {
+    func transformWords(using closure: (Substring) -> String) -> String {
+        let words = split(separator: " ")
+        var results = [String]()
+        
+        for word in words {
+            let transformed = closure(word)
+            results.append(transformed)
+        }
+        return results.joined(separator: " ")
+    }
+}
+
+//call
+let string = "Hello world you are very polluted".transformWords(using: { word in
+                                                                    return word.lowercased() })
+// - the "in" keyword is used to name the arguments that the closure accepts
+// - an optimized solution would be replacing "word in" with $0
+
+//the code will be:
+let string1 = "Hello world you are beautiful".transformWords{ $0.lowercased()}
+
+
+
+
+
+
+
+
+
 
 let driving = {
    print("I m driving")
@@ -114,6 +166,3 @@ let result1 = travelReturn1()
 result1("londonn")
 result1("londonn")
 result1("londonn")
-
-
-
