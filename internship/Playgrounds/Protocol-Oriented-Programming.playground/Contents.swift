@@ -122,3 +122,118 @@ extension CustomStringConvertible where Self: Bird1 {
 
 //UnladenSwallow.european
 
+//MARK: effects on the swift standard library
+
+let numbers = [10, 20, 30, 40, 50, 60]
+let slice = numbers[1...3]
+let reversedSlice = slice.reversed()
+
+let answer = reversedSlice.map { $0 * 10 }
+print(answer)
+
+/* interesting facts:
+ - slice as a type is ArraySlice<Int>
+ - reversedSlice is ReversedCollection<ArraySlice<Int>>
+ - map is an extension to the Sequence protocol, which all Collection types conform to.
+ */
+
+
+//adding a comparison for the bird
+
+class Motorcycle {
+    
+    var name: String
+    var speed: Double
+    
+    init(name: String) {
+        self.name = name
+        self.speed = 200.0
+    }
+}
+
+
+//now we need a common protocol for racing
+
+protocol Racer {
+    var speed: Double { get }
+}
+
+// then conform everything to racer so that all existing types can be raced.
+extension FlappyBird: Racer {
+    var speed: Double {
+        airspeedVelocity
+    }
+}
+
+extension SwiftBird: Racer {
+    var speed: Double {
+        airspeedVelocity
+    }
+}
+
+extension Penguin: Racer {
+    var speed: Double {
+        45
+    }
+}
+
+extension UnladenSwallow: Racer {
+    var speed: Double {
+        canFly ? airspeedVelocity : 0.0
+    }
+}
+
+extension Motorcycle: Racer {}
+
+let racers : [Racer] = [UnladenSwallow.african, UnladenSwallow.european, UnladenSwallow.unknown, Penguin(name: "King penguin"), SwiftBird(version: 5.1), FlappyBird(name: "Felipee", flappyAmplitude: 3.0, flappyFrequency: 20.0), Motorcycle(name: "Giacomo")]
+
+//get the top speed
+func topSpeed(of racers: [Racer]) -> Double {
+    racers.max(by: {$0.speed < $1.speed})?.speed ?? 0.0
+}
+
+topSpeed(of: racers)
+
+
+//making it generic
+//if we want to find the top speed for a subset
+//new top speed func
+
+func topSpeed_<RacersType: Sequence>(of racers: RacersType) -> Double where RacersType.Iterator.Element == Racer {
+    racers.max(by: {$0.speed < $1.speed })?.speed ?? 0.0
+}
+
+//RacersType is the generic type, so the input can be any type that conforms to the Sequence protocol
+// where clause specifies that the Element type of the Sequence must conform to Racer protocol to use this function
+
+topSpeed_(of: racers[1...3])
+
+//making it more swifty
+
+extension Sequence where Iterator.Element == Racer {
+    func topSpeed() -> Double {
+        self.max(by: { $0.speed < $1.speed })?.speed ?? 0.0
+    }
+}
+
+racers[1...3].topSpeed()
+
+
+//MARK: Mutating functions
+// what if i want to change something at an object?
+
+protocol Cheat {
+    mutating func boost(_ power: Double)
+}
+
+extension SwiftBird: Cheat {
+    mutating func boost(_ power: Double) {
+        speedFactor += power
+    }
+} //mutating for the struct to know one of its values will change
+
+var swiftBird = SwiftBird(version: 5.0)
+swiftBird.boost(3.0)
+swiftBird.airspeedVelocity
+swiftBird.boost(3.0)
+swiftBird.airspeedVelocity
