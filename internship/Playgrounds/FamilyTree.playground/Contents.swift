@@ -1,8 +1,8 @@
 import Foundation
 
 let jsonString = """
-{"firstName":"Sergio","lastName":"Conti", "age": 10, "sex": .male, "descendants": [
-    "firstName":"Matthew","lastName":"Giko", "age": 30, "sex": .male, "descendants": [], "occupation": .doctor
+{"firstName":"Sergio","lastName":"Conti", "age": 10, "sex": male, "descendants": [
+    "firstName":"Matthew","lastName":"Giko", "age": 30, "sex": male, "descendants": [], "occupation": doctor
 ], "occupation": nil}
 """
 
@@ -21,8 +21,8 @@ enum Sex: String, Decodable {
 
 enum Occupation {
 
-    static func create(from stirng:String) -> Occupation? {
-        let values = stirng.split(separator: " ").map({ String($0)})
+    static func create(from string:String) -> Occupation? {
+        let values = string.split(separator: " ").map({ String($0)})
         if let primary = values.first {
             switch primary {
                 case "doctor": return .doctor

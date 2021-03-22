@@ -1,8 +1,9 @@
+import UIKit
+
 var flower: Any = "trandafir"
 flower = 28
 var sunflower: AnyObject = "trandafir" as AnyObject
 
-import UIKit
 var flower2: NSString = "sunflower"
 
 class Flower {

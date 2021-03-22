@@ -7,7 +7,8 @@ import Foundation
  - it accepts input and output
  - can be stored as properties and local variables
  - can be passed as arguments to function
- - can capture and store references 
+ - can capture and store references
+ 
  */
 
 struct IntToStringConvertor {
@@ -16,7 +17,7 @@ struct IntToStringConvertor {
 }
 
 //a closure defined as an inline variable with takes no input and produces an Int as output
-let intProvider: () -> Int = { return 1}
+let intProvider: () -> Int = { return 1 }
 
 //a closure function argument that has no input or output
 func performOperation(then closure: () -> Void) {
@@ -36,6 +37,9 @@ extension String {
     }
 }
 
+// info v2
+// - closures are variables that holds code
+
 //call
 let string = "Hello world you are very polluted".transformWords(using: { word in
                                                                     return word.lowercased() })
@@ -44,14 +48,6 @@ let string = "Hello world you are very polluted".transformWords(using: { word in
 
 //the code will be:
 let string1 = "Hello world you are beautiful".transformWords{ $0.lowercased()}
-
-
-
-
-
-
-
-
 
 
 let driving = {
@@ -110,6 +106,16 @@ travel2 { (place: String) in
     print("I m going to \(place) in my car")
 }
 
+func iTrave(action: (String) -> String) {
+    print("I travel")
+    let description = action("paris")
+    print(description)
+    print("I arrived")
+}
+
+iTrave { (place: String) -> String in
+    return "I m going to \(place) in my car"
+}/*
 //using closures as parameters when they return values
 func travelFunc(action: (String) -> String) {
     print("I' m getting ready to go")
@@ -166,3 +172,4 @@ let result1 = travelReturn1()
 result1("londonn")
 result1("londonn")
 result1("londonn")
+*/
