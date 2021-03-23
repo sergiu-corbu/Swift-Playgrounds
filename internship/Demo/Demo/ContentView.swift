@@ -43,7 +43,7 @@ struct ContentView: View {
                     .font(.title2)
                     .foregroundColor(.purple)
                     .shadow(radius: 10)
-                    .padding(.top, 15)
+                    .padding(.top, 35)
             }.padding(.bottom, 30)
             
             VStack{
@@ -107,8 +107,9 @@ struct ContentView: View {
                 }
             }
             .padding(25)
-        }
+        } // scroll end
         .background(Color.orange)
+        .edgesIgnoringSafeArea(.all)
     }
 }
 

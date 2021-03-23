@@ -1,9 +1,21 @@
 import Foundation
 
-let jsonString = """
+/*let jsonString = """
 {"firstName":"Sergio","lastName":"Conti", "age": 10, "sex": male, "descendants": [
-    "firstName":"Matthew","lastName":"Giko", "age": 30, "sex": male, "descendants": [], "occupation": doctor
+    "firstName":"Matthew","lastName":"Giko", "age": 30, "sex": male, "descendants": [], "occupation": .doctor
 ], "occupation": nil}
+""" */
+
+let jsonString = """
+{
+   "firstName":"Sergio",
+   "lastName":"Conti",
+   "age":10,
+   "sex":"male",
+   "descendants":"[]",
+   "occupation":"doctor",
+   "spouse":"nil"
+}
 """
 
 let jsonData = Data(jsonString.utf8) //convert json string to object
@@ -20,8 +32,8 @@ enum Sex: String, Decodable {
 }
 
 enum Occupation {
-
-    static func create(from string:String) -> Occupation? {
+    
+    static func create(from string: String) -> Occupation? {
         let values = string.split(separator: " ").map({ String($0)})
         if let primary = values.first {
             switch primary {
@@ -43,12 +55,12 @@ enum Occupation {
         }
         return nil
     }
-
     case doctor
     case student
     case engineer(type: EngineerType)
     case retired
     case athlete
+
 }
 
 class Person: Decodable {
@@ -61,6 +73,42 @@ class Person: Decodable {
     var occupation: Occupation?
     var isVisited = false
     var spouse: Person?
+    
+    enum CodingKeys: String, CodingKey {
+        case firstName
+        case lastName
+        case age
+        case sex
+        case descendants
+        case occupation
+        case spouse
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+       
+        let firstNameVal = try values.decode(String.self, forKey: .firstName)
+        self.firstName = firstNameVal
+    
+        let lastNameVal = try values.decode(String.self, forKey: .lastName)
+        self.lastName = lastNameVal
+        
+        let ageVal = try values.decode(Int.self, forKey: .age)
+        self.age = ageVal
+       
+        let sexVal = try values.decode(Sex.self, forKey: .sex)
+        self.sex = sexVal
+        
+        let descendantsVal = try values.decode([Person].self, forKey: .descendants)
+        self.descendants = descendantsVal
+
+        let occupationVal = try values.decode(String.self, forKey: .occupation)
+        self.occupation = Occupation.create(from: occupationVal)
+        
+        let spouseVal = try values.decode(Person.self, forKey: .spouse)
+        self.spouse = spouseVal
+        
+    }
     
     init(firstName: String, lastName: String, age: Int, sex: Sex, descendants: [Person], occupation: Occupation?, spouse: Person?) {
         self.firstName = firstName
@@ -93,7 +141,6 @@ class Person: Decodable {
         let baby = Person(firstName: firstName, lastName: self.lastName, age: 0, sex: sex, descendants: [], occupation: nil, spouse: nil)
         descendants.append(baby)
     }
-    
 }
 
 class FamilyTree: Decodable {
@@ -147,7 +194,7 @@ class FamilyTree: Decodable {
         return result
     }
     
-    func showCousins(person: Person) -> [String] {
+    func showCousins(person: Person) -> [String] { // to do
         guard let spouse = person.spouse else { return ["\(person.fullName) does not have a spouse"]}
         return showMembers(person: person) + showMembers(person: spouse)
     }
@@ -184,3 +231,9 @@ person1.addBaby(firstName: "Alina", sex: .female)
 //print(fam1.showMembersWithOccupation())
 //print(fam1.showCousins(person: person4))
 //print(fam1.showAncestors(to: person4))
+
+
+if let data = fam1.buildFromJson(data: jsonData) {
+    print("\(data.fullName)")
+}
+
