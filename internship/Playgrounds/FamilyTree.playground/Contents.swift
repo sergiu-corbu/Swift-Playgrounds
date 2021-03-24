@@ -163,9 +163,18 @@ class FamilyTree: Decodable {
         return result
     }
     
-    func showAncestors(to dest: Person) -> [String] {    //////to doooooo
-        var result: [String] = [firstAncestor.fullName]
+    func showAncestors(from person: Person, to personToFind: Person) -> [String] {
         
+        var result: [String] = [person.fullName]
+        person.isVisited = true
+        for descendant in person.descendants {
+            if descendant.fullName == personToFind.fullName { //sa ii adauge in result, iar daca nu e sa ii stearga pe toti, sa treaca la next descendant, sa retina nr de descendants si tot asa
+                break
+            } else if !descendant.isVisited {
+                result += showMembers(person: descendant)
+            }
+        }
+        person.isVisited = false
         return result
     }
     
@@ -214,7 +223,7 @@ class FamilyTree: Decodable {
 var person2 = Person(firstName: "Sergiu", lastName: "Corbu", age: 20, sex: .male, descendants: [], occupation: .engineer(type: .software), spouse: nil)
 var person4 = Person(firstName: "Ana", lastName: "Moldovan", age: 68, sex: .female, descendants: [], occupation: .retired, spouse: nil)
 var person1 = Person(firstName: "Jim", lastName: "Mac", age: 19, sex: .male, descendants: [person4], occupation: .athlete, spouse: nil)
-var person3 = Person(firstName: "Jack", lastName: "Wills", age: 40, sex: .male, descendants: [person4], occupation: nil, spouse: nil)
+var person3 = Person(firstName: "Jack", lastName: "Wills", age: 40, sex: .male, descendants: [], occupation: nil, spouse: nil)
 var person0 = Person(firstName: "Tom", lastName: "Green", age: 43, sex: .male, descendants: [person1, person2, person3], occupation: .doctor, spouse: nil)
 
 var fam1 = FamilyTree(firstAncestor: person0)
@@ -230,10 +239,9 @@ person1.addBaby(firstName: "Alina", sex: .female)
 //print("Members with occupation are: ")
 //print(fam1.showMembersWithOccupation())
 //print(fam1.showCousins(person: person4))
-//print(fam1.showAncestors(to: person4))
+print(fam1.showAncestors(from: person0, to: person4))
 
-
+/*
 if let data = fam1.buildFromJson(data: jsonData) {
     print("\(data.fullName)")
-}
-
+}*/
