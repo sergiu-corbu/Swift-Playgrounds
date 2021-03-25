@@ -163,21 +163,20 @@ class FamilyTree: Decodable {
         return result
     }
     
-    func showAncestors(from person: Person, to personToFind: Person) -> [String] {
-        
-        var result: [String] = [person.fullName]
+    func showAncestors(from person: Person, to personToFind: Person) {
+        print("\(person.fullName) -> ")
         person.isVisited = true
-        for descendant in person.descendants {
-            if descendant.fullName == personToFind.fullName { //sa ii adauge in result, iar daca nu e sa ii stearga pe toti, sa treaca la next descendant, sa retina nr de descendants si tot asa
-                break
-            } else if !descendant.isVisited {
-                result += showMembers(person: descendant)
+        if person.fullName != personToFind.fullName {
+           
+            for descendant in person.descendants {
+                if !descendant.isVisited {
+                    return showAncestors(from: descendant, to: personToFind)
+                }
             }
         }
         person.isVisited = false
-        return result
     }
-    
+
     func showMembersWithOccupation() -> [String] {
         
         var result = (firstAncestor.occupation != nil ? [firstAncestor.fullName] : [])
@@ -204,8 +203,9 @@ class FamilyTree: Decodable {
     }
     
     func showCousins(person: Person) -> [String] { // to do
-        guard let spouse = person.spouse else { return ["\(person.fullName) does not have a spouse"]}
-        return showMembers(person: person) + showMembers(person: spouse)
+       // guard let spouse = person.spouse else { return ["\(person.fullName) does not have a spouse"]}
+      //  return showMembers(person: person) + showMembers(person: spouse)
+        return []
     }
     
     func buildFromJson(data: Data) -> Person? {
