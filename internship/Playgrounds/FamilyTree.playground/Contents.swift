@@ -110,14 +110,13 @@ class Person: Decodable {
         
     }
     
-    init(firstName: String, lastName: String, age: Int, sex: Sex, descendants: [Person], occupation: Occupation?, spouse: Person?) {
+    init(firstName: String, lastName: String, age: Int, sex: Sex, descendants: [Person], occupation: Occupation?) {
         self.firstName = firstName
         self.lastName = lastName
         self.age = age
         self.sex = sex
         self.descendants = descendants
         self.occupation = occupation
-        self.spouse = spouse
     }
 
     var fullName: String {
@@ -138,7 +137,7 @@ class Person: Decodable {
     }
     
     func addBaby(firstName: String, sex: Sex) {
-        let baby = Person(firstName: firstName, lastName: self.lastName, age: 0, sex: sex, descendants: [], occupation: nil, spouse: nil)
+        let baby = Person(firstName: firstName, lastName: self.lastName, age: 0, sex: sex, descendants: [], occupation: nil)
         descendants.append(baby)
     }
 }
@@ -202,12 +201,14 @@ class FamilyTree: Decodable {
         return result
     }
     
-    func showCousins(person: Person) -> [String] { // to do
-       // guard let spouse = person.spouse else { return ["\(person.fullName) does not have a spouse"]}
-      //  return showMembers(person: person) + showMembers(person: spouse)
+    func showCousins(person: Person) -> [String] {
+       /* guard let person2 = person
+        if sameChildren(person1: person, person2: person.spouse!) {
+            return [person.fullName]
+        }
+         */
         return []
     }
-    
     func buildFromJson(data: Data) -> Person? {
         var result: Person?
         do {
@@ -219,15 +220,42 @@ class FamilyTree: Decodable {
     }
 }
 
+func sameChildren(person1: Person, person2: Person) -> Bool {
+    
+    if person1.sex == person2.sex {
+        return false
+    }
+    
+    let p1Children = person1.descendants.count
+    let p2Children = person2.descendants.count
+    
+    if p1Children == p2Children && p1Children > 0 {
+        for child in person1.descendants {
+            var isFound:Bool = false
+            for child2 in person2.descendants {
+                if child.fullName == child2.fullName { isFound = true }
+            }
+            if isFound == false { return false }
+        }
+        return true
+    }
+    return false
+}
 
-var person2 = Person(firstName: "Sergiu", lastName: "Corbu", age: 20, sex: .male, descendants: [], occupation: .engineer(type: .software), spouse: nil)
-var person4 = Person(firstName: "Ana", lastName: "Moldovan", age: 68, sex: .female, descendants: [], occupation: .retired, spouse: nil)
-var person1 = Person(firstName: "Jim", lastName: "Mac", age: 19, sex: .male, descendants: [person4], occupation: .athlete, spouse: nil)
-var person3 = Person(firstName: "Jack", lastName: "Wills", age: 40, sex: .male, descendants: [], occupation: nil, spouse: nil)
-var person0 = Person(firstName: "Tom", lastName: "Green", age: 43, sex: .male, descendants: [person1, person2, person3], occupation: .doctor, spouse: nil)
+var person2 = Person(firstName: "Sergiu", lastName: "Corbu", age: 20, sex: .male, descendants: [], occupation: .engineer(type: .software))
+var person4 = Person(firstName: "Ana", lastName: "Moldovan", age: 68, sex: .female, descendants: [], occupation: .retired)
+var person1 = Person(firstName: "Jim", lastName: "Mac", age: 39, sex: .male, descendants: [person4], occupation: .athlete)
+var person3 = Person(firstName: "Jack", lastName: "Wills", age: 40, sex: .male, descendants: [], occupation: nil)
+
+var person0 = Person(firstName: "Tom", lastName: "Green", age: 43, sex: .male, descendants: [person1, person2, person3], occupation: .doctor)
+
+var person0_ = Person(firstName: "Andreea", lastName: "Green", age: 41, sex: .female, descendants: [person1, person2, person3], occupation: .doctor)
+
+person0.spouse = person0_
+person0_.spouse = person0
 
 var fam1 = FamilyTree(firstAncestor: person0)
-
+var fam2 = FamilyTree(firstAncestor: person0_)
 //print(person1.adultSons)
 person1.addBaby(firstName: "Alina", sex: .female)
 //print(person0.descendants)
@@ -239,9 +267,16 @@ person1.addBaby(firstName: "Alina", sex: .female)
 //print("Members with occupation are: ")
 //print(fam1.showMembersWithOccupation())
 //print(fam1.showCousins(person: person4))
-print(fam1.showAncestors(from: person0, to: person4))
+//print(fam1.showAncestors(from: person0, to: person4))
 
 /*
 if let data = fam1.buildFromJson(data: jsonData) {
     print("\(data.fullName)")
 }*/
+
+/* --ok
+if sameChildren(person1: person0, person2: person0_) {
+    print("same children")
+} else {
+    print("errorr")
+} */
