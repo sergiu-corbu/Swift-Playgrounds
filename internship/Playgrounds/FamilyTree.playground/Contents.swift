@@ -4,17 +4,17 @@ import Foundation
 {"firstName":"Sergio","lastName":"Conti", "age": 10, "sex": male, "descendants": [
     "firstName":"Matthew","lastName":"Giko", "age": 30, "sex": male, "descendants": [], "occupation": .doctor
 ], "occupation": nil}
-""" */
+"""
+ "spouse": "nil"*/
 
 let jsonString = """
 {
-   "firstName":"Sergio",
-   "lastName":"Conti",
-   "age":10,
-   "sex":"male",
-   "descendants":"[]",
-   "occupation":"doctor",
-   "spouse":"nil"
+    "firstName": "Matei",
+    "lastName": "Radu",
+    "age": 40,
+    "sex": "male",
+    "descendants": [],
+    "occupation": "doctor",
 }
 """
 
@@ -72,7 +72,7 @@ class Person: Decodable {
     var descendants: [Person]
     var occupation: Occupation?
     var isVisited = false
-    var spouse: Person?
+  //  var spouse: Person?
     
     enum CodingKeys: String, CodingKey {
         case firstName
@@ -81,7 +81,7 @@ class Person: Decodable {
         case sex
         case descendants
         case occupation
-        case spouse
+     //   case spouse
     }
     
     required init(from decoder: Decoder) throws {
@@ -105,8 +105,8 @@ class Person: Decodable {
         let occupationVal = try values.decode(String.self, forKey: .occupation)
         self.occupation = Occupation.create(from: occupationVal)
         
-        let spouseVal = try values.decode(Person.self, forKey: .spouse)
-        self.spouse = spouseVal
+       // let spouseVal = try values.decode(Person.self, forKey: .spouse)
+//self.spouse = spouseVal
         
     }
     
@@ -251,8 +251,8 @@ var person0 = Person(firstName: "Tom", lastName: "Green", age: 43, sex: .male, d
 
 var person0_ = Person(firstName: "Andreea", lastName: "Green", age: 41, sex: .female, descendants: [person1, person2, person3], occupation: .doctor)
 
-person0.spouse = person0_
-person0_.spouse = person0
+//person0.spouse = person0_
+//person0_.spouse = person0
 
 var fam1 = FamilyTree(firstAncestor: person0)
 var fam2 = FamilyTree(firstAncestor: person0_)
@@ -269,10 +269,10 @@ person1.addBaby(firstName: "Alina", sex: .female)
 //print(fam1.showCousins(person: person4))
 //print(fam1.showAncestors(from: person0, to: person4))
 
-/*
+
 if let data = fam1.buildFromJson(data: jsonData) {
-    print("\(data.fullName)")
-}*/
+    print("\(data.description)")
+}
 
 /* --ok
 if sameChildren(person1: person0, person2: person0_) {
