@@ -72,7 +72,7 @@ class Person: Decodable {
     var descendants: [Person]
     var occupation: Occupation?
     var isVisited = false
-  //  var spouse: Person?
+    // var spouse: Person?
     
     enum CodingKeys: String, CodingKey {
         case firstName
@@ -81,7 +81,7 @@ class Person: Decodable {
         case sex
         case descendants
         case occupation
-     //   case spouse
+      //  case spouse
     }
     
     required init(from decoder: Decoder) throws {
@@ -105,8 +105,8 @@ class Person: Decodable {
         let occupationVal = try values.decode(String.self, forKey: .occupation)
         self.occupation = Occupation.create(from: occupationVal)
         
-       // let spouseVal = try values.decode(Person.self, forKey: .spouse)
-//self.spouse = spouseVal
+   //     let spouseVal = try values.decode(Person.self, forKey: .spouse)
+    //    self.spouse = spouseVal
         
     }
     
