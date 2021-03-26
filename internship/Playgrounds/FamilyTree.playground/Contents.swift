@@ -1,12 +1,5 @@
 import Foundation
 
-/*let jsonString = """
-{"firstName":"Sergio","lastName":"Conti", "age": 10, "sex": male, "descendants": [
-    "firstName":"Matthew","lastName":"Giko", "age": 30, "sex": male, "descendants": [], "occupation": .doctor
-], "occupation": nil}
-"""
- "spouse": "nil"*/
-
 let jsonString = """
 {
     "firstName": "Matei",
@@ -34,7 +27,7 @@ enum Sex: String, Decodable {
 enum Occupation {
     
     static func create(from string: String) -> Occupation? {
-        let values = string.split(separator: " ").map({ String($0)})
+        let values = string.split(separator: " ").map({ String($0) })
         if let primary = values.first {
             switch primary {
                 case "doctor": return .doctor
@@ -55,6 +48,7 @@ enum Occupation {
         }
         return nil
     }
+    
     case doctor
     case student
     case engineer(type: EngineerType)
@@ -72,7 +66,8 @@ class Person: Decodable {
     var descendants: [Person]
     var occupation: Occupation?
     var isVisited = false
-    // var spouse: Person?
+    weak var parent: Person?
+    var spouse: Person?
     
     enum CodingKeys: String, CodingKey {
         case firstName
@@ -81,7 +76,6 @@ class Person: Decodable {
         case sex
         case descendants
         case occupation
-      //  case spouse
     }
     
     required init(from decoder: Decoder) throws {
@@ -104,10 +98,6 @@ class Person: Decodable {
 
         let occupationVal = try values.decode(String.self, forKey: .occupation)
         self.occupation = Occupation.create(from: occupationVal)
-        
-   //     let spouseVal = try values.decode(Person.self, forKey: .spouse)
-    //    self.spouse = spouseVal
-        
     }
     
     init(firstName: String, lastName: String, age: Int, sex: Sex, descendants: [Person], occupation: Occupation?) {
@@ -124,16 +114,21 @@ class Person: Decodable {
     }
     
     var description: String {
-       if descendants.count > 0{
-            return "\(firstName.capitalized) is a \(age) year old \(sex) \(occupation!) and has \(descendants.count) sons."
+       if descendants.count > 0 {
+            return "\(firstName.capitalized) is a \(age) year old \(sex) \(occupation!) and has \(descendants.count) children."
         }
-        else{
-            return "\(firstName.capitalized) is a \(age) year old \(sex) \(occupation!) and doesn't have any sons."
+        else {
+            return "\(firstName.capitalized) is a \(age) year old \(sex) \(occupation!) and doesn't have children."
         }
     }
     
     var adultSons: [String] {
-        return descendants.filter({ $0.age >= 18}).map({$0.firstName})
+        let sons: [String] = descendants.filter({ $0.age >= 18}).map({$0.firstName})
+        if !sons.isEmpty {
+            print("\(fullName) has \(sons.count) adult children: ")
+            return sons
+        }
+        return ["\(fullName) doesn't have any adult children"]
     }
     
     func addBaby(firstName: String, sex: Sex) {
@@ -154,15 +149,44 @@ class FamilyTree: Decodable {
         var result: [String] = [person.fullName]
         person.isVisited = true
         for descendant in person.descendants {
-                if !descendant.isVisited {
-                    result += showMembers(person: descendant)
-                }
+            descendant.parent = person
+            if !descendant.isVisited {
+                result += showMembers(person: descendant)
+            }
         }
         person.isVisited = false
         return result
     }
     
-    func showAncestors(from person: Person, to personToFind: Person) {
+    func showMembersWithOccupation() -> [String] {
+        
+        var result = (firstAncestor.occupation != nil ? [firstAncestor.fullName] : [])
+        firstAncestor.isVisited = true
+        for descendant in firstAncestor.descendants {
+            if !descendant.isVisited && descendant.occupation != nil {
+                result += showMembers(person: descendant)
+            }
+        }
+        firstAncestor.isVisited = false
+        return result
+    }
+    
+    func searchPerson(personToFind: Person) -> String {
+        let allMembers = showMembers(person: firstAncestor)
+        
+        var result: String = "The person you are looking for is "
+        for member in allMembers {
+            if member.contains(personToFind.fullName) {
+                result += personToFind.fullName
+                result += ". "
+                result += personToFind.description
+                break
+            }
+        }
+        return result
+    }
+    
+    func showAncestors(from person: Person, to personToFind: Person) -> [String] {
         print("\(person.fullName) -> ")
         person.isVisited = true
         if person.fullName != personToFind.fullName {
@@ -175,40 +199,13 @@ class FamilyTree: Decodable {
         }
         person.isVisited = false
     }
-
-    func showMembersWithOccupation() -> [String] {
-        
-        var result = (firstAncestor.occupation != nil ? [firstAncestor.fullName] : [])
-        firstAncestor.isVisited = true
-        for descendant in firstAncestor.descendants {
-            if !descendant.isVisited && descendant.occupation != nil {
-                result += showMembers(person: descendant)
-            }
-        }
-        return result
-    }
-    
-    func searchPerson(personToFind: Person) -> String {
-        let allMembers = showMembers(person: firstAncestor)
-    
-        var result: String = "The person you are looking for is "
-        for member in allMembers {
-            if member.contains(personToFind.fullName) {
-                result += member
-                break
-            }
-        }
-        return result
-    }
     
     func showCousins(person: Person) -> [String] {
-       /* guard let person2 = person
-        if sameChildren(person1: person, person2: person.spouse!) {
-            return [person.fullName]
-        }
-         */
+        //guard let spouse = person.spouse else { return ["The operation couldn't be completed"] }
+       // if sameChildren(person1: person, person2: )
         return []
     }
+    
     func buildFromJson(data: Data) -> Person? {
         var result: Person?
         do {
@@ -242,37 +239,36 @@ func sameChildren(person1: Person, person2: Person) -> Bool {
     return false
 }
 
+//the data
 var person2 = Person(firstName: "Sergiu", lastName: "Corbu", age: 20, sex: .male, descendants: [], occupation: .engineer(type: .software))
 var person4 = Person(firstName: "Ana", lastName: "Moldovan", age: 68, sex: .female, descendants: [], occupation: .retired)
-var person1 = Person(firstName: "Jim", lastName: "Mac", age: 39, sex: .male, descendants: [person4], occupation: .athlete)
-var person3 = Person(firstName: "Jack", lastName: "Wills", age: 40, sex: .male, descendants: [], occupation: nil)
+var person1 = Person(firstName: "Paul", lastName: "Moldovan", age: 39, sex: .male, descendants: [person4], occupation: .athlete)
+var person5 = Person(firstName: "Maria", lastName: "Dumitru", age: 19, sex: .female, descendants: [], occupation: .student)
+var person3 = Person(firstName: "Sebi", lastName: "Dumitru", age: 40, sex: .male, descendants: [person5], occupation: nil)
 
 var person0 = Person(firstName: "Tom", lastName: "Green", age: 43, sex: .male, descendants: [person1, person2, person3], occupation: .doctor)
 
 var person0_ = Person(firstName: "Andreea", lastName: "Green", age: 41, sex: .female, descendants: [person1, person2, person3], occupation: .doctor)
 
-//person0.spouse = person0_
-//person0_.spouse = person0
+person0.spouse = person0_
+person0_.spouse = person0
 
 var fam1 = FamilyTree(firstAncestor: person0)
 var fam2 = FamilyTree(firstAncestor: person0_)
-//print(person1.adultSons)
+
+//print(person0.adultSons)
 person1.addBaby(firstName: "Alina", sex: .female)
 //print(person0.descendants)
+//print(fam1.searchPerson(personToFind: person5))
+//print("Members from fam1 are: \(fam1.showMembers(person: person0))")
+//print("Members with occupation are: \(fam1.showMembersWithOccupation())")
 
-//print(fam1.searchPerson(personToFind: person3))
-
-//print(fam1.showMembers(person: person0))
-
-//print("Members with occupation are: ")
-//print(fam1.showMembersWithOccupation())
+print(fam1.showAncestors(from: person0, to: person4))
 //print(fam1.showCousins(person: person4))
-//print(fam1.showAncestors(from: person0, to: person4))
 
-
-if let data = fam1.buildFromJson(data: jsonData) {
-    print("\(data.description)")
-}
+/*if let data = fam1.buildFromJson(data: jsonData) {
+    print("\(data.description)") //ok
+} */
 
 /* --ok
 if sameChildren(person1: person0, person2: person0_) {
