@@ -222,61 +222,58 @@ class FamilyTree: Decodable {
         }
         return result
     }
-}
-
-func sameChildren(person1: Person, person2: Person) -> Bool {
     
-    if person1.sex == person2.sex {
+    func sameChildren(person1: Person, person2: Person) -> Bool {
+        
+        if person1.sex == person2.sex {
+            return false
+        }
+        
+        let p1Children = person1.descendants.count
+        let p2Children = person2.descendants.count
+        
+        if p1Children == p2Children && p1Children > 0 {
+            for child in person1.descendants {
+                var isFound:Bool = false
+                for child2 in person2.descendants {
+                    if child.fullName == child2.fullName { isFound = true }
+                }
+                if isFound == false { return false }
+            }
+            return true
+        }
         return false
     }
     
-    let p1Children = person1.descendants.count
-    let p2Children = person2.descendants.count
-    
-    if p1Children == p2Children && p1Children > 0 {
-        for child in person1.descendants {
-            var isFound:Bool = false
-            for child2 in person2.descendants {
-                if child.fullName == child2.fullName { isFound = true }
-            }
-            if isFound == false { return false }
-        }
-        return true
-    }
-    return false
-}
-
-func showCousins(person: Person) -> [String] {
-    fam1.initializeHierarchy(person: person0)
-    fam2.initializeHierarchy(person: person0_)
-    
-    guard let thisParent = person.parent else { return ["\(person.fullName) doesn't have a parent"] }
-    guard let spouse = thisParent.spouse else { return ["\(person.fullName) doesn't have a spouse"] }
-    var allCousins: [String] = []
-    
-    if sameChildren(person1: person.parent!, person2: spouse) {
-        if let grandParent = thisParent.parent {
-            for children in grandParent.descendants {
-                if children.fullName != thisParent.fullName {
-                    for child in children.descendants {
-                        allCousins += [child.fullName]
-                    }
-                }
-            }
-        }
+    func showCousins(person: Person) -> [String] {
+        initializeHierarchy(person: person0)
+        initializeHierarchy(person: person0_)
         
-        if let grandParent = thisParent.parent!.spouse {
-            for children in grandParent.descendants {
-                if children.fullName != thisParent.spouse!.fullName {
-                    for child in children.descendants {
-                        allCousins += [child.fullName]
+        guard let thisParent = person.parent else { return ["\(person.fullName) doesn't have a parent"] }
+        guard let spouse = thisParent.spouse else { return ["\(person.fullName) doesn't have a spouse"] }
+        var allCousins: [String] = []
+        
+        if sameChildren(person1: thisParent, person2: spouse) {
+            
+            if let grandParent = thisParent.parent { // cousins from father's side
+                for children in grandParent.descendants {
+                    if children.fullName != thisParent.fullName {
+                        for child in children.descendants { allCousins += [child.fullName] }
                     }
                 }
             }
+            if let grandParent = spouse.parent { // cousins from mother's side
+                for children in grandParent.descendants {
+                    if children.fullName != spouse.fullName {
+                        for child in children.descendants { allCousins += [child.fullName] }
+                    }
+                }
+            }
+            
+            return allCousins
         }
-    
-        return allCousins
-    } else { return ["Error! The two people have the same gender or they don't have the same children. Please revise the data provided"]}
+        return ["Error! Please revise the data provided"]
+    }
 }
 
 //the data for fam1
@@ -295,6 +292,8 @@ var person3_ = Person(firstName: "Toby", lastName: "Green", age: 11, sex: .male,
 var person2_ = Person(firstName: "Martin", lastName: "Green", age: 31, sex: .male, descendants: [person3_], occupation: .doctor)
 var person0_ = Person(firstName: "Andreea", lastName: "Green", age: 41, sex: .female, descendants: [person1_, person2_], occupation: .doctor)
 
+person4.addBaby(firstName: "Alina", sex: .female)
+
 person0.spouse = person0_
 person0_.spouse = person0
 
@@ -304,20 +303,25 @@ person1_.spouse = person1
 var fam1 = FamilyTree(firstAncestor: person0)
 var fam2 = FamilyTree(firstAncestor: person0_)
 
-//print(person0.adultSons)
-person4.addBaby(firstName: "Alina", sex: .female)
-//print(person0.descendants)
-//print(fam1.searchPerson(personToFind: person5))
-//print("Members from fam1 are: \(fam1.showMembers(person: person0))")
-//print("Members from fam1 are: \(fam2.showMembers(person: person0_))")
-//print("Members with occupation are: \(fam1.showMembersWithOccupation())")
+print(person0.adultSons)
+print("\n")
+print(fam1.searchPerson(personToFind: person5))
+print("\n")
+print("Members from fam1 are: \(fam1.showMembers(person: person0))")
+print("\n")
+print("Members from fam2 are: \(fam2.showMembers(person: person0_))")
+print("\n")
+print("Members with occupation from fam1 are: \(fam1.showMembersWithOccupation())")
+print("\n")
 
-//print("Ancestors for \(person5.fullName) are: \(fam1.showAncestors(from: person0, to: person5))")
-print("Cousins for \(person4.fullName) are \(showCousins(person: person4))")
+print("Ancestors for \(person5.fullName) are: \(fam1.showAncestors(from: person0, to: person5))")
+print("\n")
+print("Cousins for \(person4.fullName) are \(fam1.showCousins(person: person4))")
+print("\n")
 
-/*if let data = fam1.buildFromJson(data: jsonData) {
-    print("\(data.description)") //ok
-} */
+if let dataFromJson = fam1.buildFromJson(data: jsonData) {
+    print("\(dataFromJson.description)") //ok
+}
 
 /* --ok
 if sameChildren(person1: person0, person2: person0_) {
