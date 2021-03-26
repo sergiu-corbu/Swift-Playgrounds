@@ -10,6 +10,7 @@ import Combine
 
 final class DataModel: ObservableObject {
    @Published var landmarks: [Landmark] = load("landmarkData.json")
+    var hikes: [Hike] = load("hikeData.json") // no need for @Published because it will never change
 }
 
 
