@@ -21,7 +21,5 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 extension Color {
-    var color: Color{
-        return Color("lavander")
-    }
+    static let lavander = Color("lavander")
 }

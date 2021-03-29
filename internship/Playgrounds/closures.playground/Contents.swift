@@ -8,6 +8,7 @@ import Foundation
  - can be stored as properties and local variables
  - can be passed as arguments to function
  - can capture and store references
+ - like a function that can be assigned to a variable
  
  */
 
