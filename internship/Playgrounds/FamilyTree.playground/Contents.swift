@@ -195,32 +195,17 @@ class FamilyTree: Decodable {
                 break
             }
         }
+        if result.isEmpty { result = "The person does not exist" }
         return result
-    }
-   
-    func showAncestors(from person: Person, to personToFind: Person) -> [String] {
-        var result: [String] = [person.fullName] // inseram automat numele primului stramos
-        let allMembers = showMembers(person: person)
-        
-        for member in allMembers {
-            if member == person.fullName { continue } // sarim peste primul
-            if member == personToFind.fullName { break }
-            else if member.contains(personToFind.lastName) {
-                result += [member]
-                }
-            }
-        let reversedResult = result.reduce([],{ [$1] + $0 })
-        return reversedResult
     }
     
-    func buildFromJson(data: Data) -> Person? {
-        var result: Person?
-        do {
-            result = try JSONDecoder().decode(Person.self, from: data)
-        } catch {
-            print("Error: \(error.localizedDescription)")
+    public var ancestors: [String] = []
+    func showAncestors(from person: Person) -> [String] {
+        if let parent = person.parent {
+            ancestors.append(parent.fullName)
+            showAncestors(from: parent)
         }
-        return result
+        return ancestors
     }
     
     func sameChildren(person1: Person, person2: Person) -> Bool {
@@ -274,23 +259,34 @@ class FamilyTree: Decodable {
         }
         return ["Error! Please revise the data provided"]
     }
+    
+    func buildFromJson(data: Data) -> Person? {
+        var result: Person?
+        do {
+            result = try JSONDecoder().decode(Person.self, from: data)
+        } catch {
+            print("Error: \(error.localizedDescription)")
+        }
+        return result
+    }
 }
 
 //the data for fam1
 var person2 = Person(firstName: "Sergiu", lastName: "Corbu", age: 20, sex: .male, descendants: [], occupation: .engineer(type: .software))
-var person4 = Person(firstName: "Ana", lastName: "Moldovan", age: 28, sex: .female, descendants: [], occupation: .athlete)
+var person6 = Person(firstName: "Bianca", lastName: "Moldovan", age: 18, sex: .female, descendants: [], occupation: .athlete)
+var person4 = Person(firstName: "Ana", lastName: "Moldovan", age: 28, sex: .female, descendants: [person6], occupation: .athlete)
 var person1 = Person(firstName: "Paul", lastName: "Moldovan", age: 59, sex: .male, descendants: [person4], occupation: .retired)
 var person5 = Person(firstName: "Maria", lastName: "Dumitru", age: 19, sex: .female, descendants: [], occupation: .student)
 var person3 = Person(firstName: "Sebi", lastName: "Dumitru", age: 40, sex: .male, descendants: [person5], occupation: nil)
 
-var person0 = Person(firstName: "Tom", lastName: "Green", age: 43, sex: .male, descendants: [person1, person2, person3], occupation: .doctor)
+var person0 = Person(firstName: "Tom", lastName: "Moldovan", age: 43, sex: .male, descendants: [person1, person2, person3], occupation: .doctor)
 
 //the data for fam2
 
 var person1_ = Person(firstName: "Maria", lastName: "Moldovan", age: 51, sex: .female, descendants: [person4], occupation: .doctor)
 var person3_ = Person(firstName: "Toby", lastName: "Green", age: 11, sex: .male, descendants: [], occupation: nil)
 var person2_ = Person(firstName: "Martin", lastName: "Green", age: 31, sex: .male, descendants: [person3_], occupation: .doctor)
-var person0_ = Person(firstName: "Andreea", lastName: "Green", age: 41, sex: .female, descendants: [person1_, person2_], occupation: .doctor)
+var person0_ = Person(firstName: "Andreea", lastName: "Moldovan", age: 41, sex: .female, descendants: [person1_, person2_], occupation: .doctor)
 
 person4.addBaby(firstName: "Alina", sex: .female)
 
@@ -303,6 +299,8 @@ person1_.spouse = person1
 var fam1 = FamilyTree(firstAncestor: person0)
 var fam2 = FamilyTree(firstAncestor: person0_)
 
+
+
 print(person0.adultSons)
 print("\n")
 print(fam1.searchPerson(personToFind: person5))
@@ -314,7 +312,8 @@ print("\n")
 print("Members with occupation from fam1 are: \(fam1.showMembersWithOccupation())")
 print("\n")
 
-print("Ancestors for \(person5.fullName) are: \(fam1.showAncestors(from: person0, to: person5))")
+fam1.initializeHierarchy(person: person0)
+print("Ancestors for \(person6.fullName) are: \(fam1.showAncestors(from: person6))")
 print("\n")
 print("Cousins for \(person4.fullName) are \(fam1.showCousins(person: person4))")
 print("\n")
