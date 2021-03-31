@@ -11,105 +11,95 @@ let height = UIScreen.main.bounds.height
 let width = UIScreen.main.bounds.width
 
 /*struct ContentView: View {
-    
-    @State private var Htapped = false
-    @State private var VTapped = false
-    @State private var StripebuttonPressed: Bool = false
-    @State private var CommitbuttonPressed: Bool = false
-    
-    var body: some View {
-        
-        VStack {
-            
-            VStack {
-                Flag()
-            }
-            .frame(width: width, height: 300)
-            .background(Color.red)
-            .edgesIgnoringSafeArea(.top)
-            
-            VStack {
-                if StripebuttonPressed {
-                    Options()
-                        .viewProperties()
-                }
-                Subsection(HTapped: $Htapped, VTapped: $VTapped)
-                    .viewProperties()
-                
-                if Htapped {
-                    CustomButton(buttonPressed: $StripebuttonPressed, text: "Add Stripe", color: Color.blue)
-                        .padding(.top, 10)
-                    
-                    CustomButton(buttonPressed: $CommitbuttonPressed, text: "Commit Section", color: Color.green)
-                }
-                else if VTapped {
-                    if !Htapped {
-                        CustomButton(buttonPressed: $StripebuttonPressed, text: "Add Stripe", color: Color.blue)
-                            .padding(.top, 10)
-                        
-                        CustomButton(buttonPressed: $CommitbuttonPressed,text: "Commit Section", color: Color.green)
-                    }
-                    
-                }
-            } // 2nd vstack
-            .padding(.top, -25)
-            Spacer()
-        } // main vstack
-        .background(Color(UIColor.systemGray3))
-        .edgesIgnoringSafeArea(.bottom)
-    }
-    
-} */
+ 
+ @State private var Htapped = false
+ @State private var VTapped = false
+ @State private var StripebuttonPressed: Bool = false
+ @State private var CommitbuttonPressed: Bool = false
+ 
+ var body: some View {
+ 
+ VStack {
+ 
+ VStack {
+ Flag()
+ }
+ .frame(width: width, height: 300)
+ .background(Color.red)
+ .edgesIgnoringSafeArea(.top)
+ 
+ VStack {
+ if StripebuttonPressed {
+ Options()
+ .viewProperties()
+ }
+ Subsection(HTapped: $Htapped, VTapped: $VTapped)
+ .viewProperties()
+ 
+ if Htapped {
+ CustomButton(buttonPressed: $StripebuttonPressed, text: "Add Stripe", color: Color.blue)
+ .padding(.top, 10)
+ 
+ CustomButton(buttonPressed: $CommitbuttonPressed, text: "Commit Section", color: Color.green)
+ }
+ else if VTapped {
+ if !Htapped {
+ CustomButton(buttonPressed: $StripebuttonPressed, text: "Add Stripe", color: Color.blue)
+ .padding(.top, 10)
+ 
+ CustomButton(buttonPressed: $CommitbuttonPressed,text: "Commit Section", color: Color.green)
+ }
+ 
+ }
+ } // 2nd vstack
+ .padding(.top, -25)
+ Spacer()
+ } // main vstack
+ .background(Color(UIColor.systemGray3))
+ .edgesIgnoringSafeArea(.bottom)
+ }
+ 
+ } */
 
 struct ContentView: View {
+    
     let widthX: CGFloat = 200
     let heightY: CGFloat = 100
     
     var body: some View {
-        HStack(spacing: 0) {
-            
-                HShape(color: Color.deepBlue, image: "img")
+        Section{
+            HStack(spacing: 0) {
+                
+                Shape(orientation: .horizontal, color: Color.deepBlue, image: "img")
                     .frame(width: widthX / 2  , height: heightY)
-            VStack(spacing: 0){
-                    VShape(color: Color.white, image: "")
+                VStack(spacing: 0) {
+                    Shape(orientation: .vertical, color: Color.white, image: "")
                         .frame(width: widthX / 2, height: heightY / 2)
-                    VShape(color: Color.red, image: "")
+                    Shape(orientation: .vertical, color: Color.red, image: "")
                         .frame(width: widthX / 2, height: heightY / 2)
-            }
+                }
             }
             .frame(width: widthX, height: heightY)
+        }
     }
 }
 
-struct VShape: View {
+enum Orientation {
+    case horizontal
+    case vertical
+}
+
+struct Shape: View {
     
+    let orientation: Orientation
     var color: Color
     var image: String?
-    
     var body: some View {
-        VStack(spacing: 0){
         Rectangle()
             .foregroundColor(color)
             .overlay(Image(image ?? "")
                         .resizable()
                         .frame(width: 45, height: 45))
-        }
-    }
-}
-
-struct HShape: View {
-    
-    var color: Color
-    var image: String?
-    
-    var body: some View {
-        HStack(spacing: 0) {
-            Rectangle()
-                .foregroundColor(color)
-                .overlay(Image(image ?? "")
-                            .resizable()
-                            .frame(width: 45, height: 45))
-        }
     }
 }
 
@@ -146,9 +136,9 @@ extension Color {
 }
 
 class FlagModel: ObservableObject {
-    @Published var components: [VShape]
+    @Published var components: [Shape]
     
-    init(components: [VShape]) {
+    init(components: [Shape]) {
         self.components = components
     }
     
