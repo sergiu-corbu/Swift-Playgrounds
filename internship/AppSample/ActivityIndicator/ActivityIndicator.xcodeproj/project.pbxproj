@@ -7,27 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EC639E672612EDA300B9CD57 /* FlagGeneratorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC639E662612EDA300B9CD57 /* FlagGeneratorApp.swift */; };
-		EC639E692612EDA300B9CD57 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC639E682612EDA300B9CD57 /* ContentView.swift */; };
-		EC639E6B2612EDA600B9CD57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC639E6A2612EDA600B9CD57 /* Assets.xcassets */; };
-		EC639E6E2612EDA600B9CD57 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC639E6D2612EDA600B9CD57 /* Preview Assets.xcassets */; };
-		EC639E7B261307F200B9CD57 /* Subviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC639E7A261307F200B9CD57 /* Subviews.swift */; };
-		ECC0CD152615DF810084591A /* ContentViewV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC0CD142615DF810084591A /* ContentViewV1.swift */; };
+		ECC0CCFF2615C1B90084591A /* ActivityIndicatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC0CCFE2615C1B90084591A /* ActivityIndicatorApp.swift */; };
+		ECC0CD012615C1B90084591A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC0CD002615C1B90084591A /* ContentView.swift */; };
+		ECC0CD032615C1DF0084591A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECC0CD022615C1DF0084591A /* Assets.xcassets */; };
+		ECC0CD062615C1DF0084591A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECC0CD052615C1DF0084591A /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		EC639E632612EDA300B9CD57 /* FlagGenerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlagGenerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC639E662612EDA300B9CD57 /* FlagGeneratorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagGeneratorApp.swift; sourceTree = "<group>"; };
-		EC639E682612EDA300B9CD57 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		EC639E6A2612EDA600B9CD57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EC639E6D2612EDA600B9CD57 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		EC639E6F2612EDA600B9CD57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EC639E7A261307F200B9CD57 /* Subviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subviews.swift; sourceTree = "<group>"; };
-		ECC0CD142615DF810084591A /* ContentViewV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewV1.swift; sourceTree = "<group>"; };
+		ECC0CCFB2615C1B90084591A /* ActivityIndicator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActivityIndicator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECC0CCFE2615C1B90084591A /* ActivityIndicatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorApp.swift; sourceTree = "<group>"; };
+		ECC0CD002615C1B90084591A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		ECC0CD022615C1DF0084591A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ECC0CD052615C1DF0084591A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		ECC0CD072615C1DF0084591A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		EC639E602612EDA300B9CD57 /* Frameworks */ = {
+		ECC0CCF82615C1B90084591A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -37,40 +33,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		EC639E5A2612EDA300B9CD57 = {
+		ECC0CCF22615C1B90084591A = {
 			isa = PBXGroup;
 			children = (
-				EC639E652612EDA300B9CD57 /* FlagGenerator */,
-				EC639E642612EDA300B9CD57 /* Products */,
+				ECC0CCFD2615C1B90084591A /* ActivityIndicator */,
+				ECC0CCFC2615C1B90084591A /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		EC639E642612EDA300B9CD57 /* Products */ = {
+		ECC0CCFC2615C1B90084591A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EC639E632612EDA300B9CD57 /* FlagGenerator.app */,
+				ECC0CCFB2615C1B90084591A /* ActivityIndicator.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		EC639E652612EDA300B9CD57 /* FlagGenerator */ = {
+		ECC0CCFD2615C1B90084591A /* ActivityIndicator */ = {
 			isa = PBXGroup;
 			children = (
-				EC639E662612EDA300B9CD57 /* FlagGeneratorApp.swift */,
-				EC639E682612EDA300B9CD57 /* ContentView.swift */,
-				ECC0CD142615DF810084591A /* ContentViewV1.swift */,
-				EC639E7A261307F200B9CD57 /* Subviews.swift */,
-				EC639E6A2612EDA600B9CD57 /* Assets.xcassets */,
-				EC639E6F2612EDA600B9CD57 /* Info.plist */,
-				EC639E6C2612EDA600B9CD57 /* Preview Content */,
+				ECC0CCFE2615C1B90084591A /* ActivityIndicatorApp.swift */,
+				ECC0CD002615C1B90084591A /* ContentView.swift */,
+				ECC0CD022615C1DF0084591A /* Assets.xcassets */,
+				ECC0CD072615C1DF0084591A /* Info.plist */,
+				ECC0CD042615C1DF0084591A /* Preview Content */,
 			);
-			path = FlagGenerator;
+			path = ActivityIndicator;
 			sourceTree = "<group>";
 		};
-		EC639E6C2612EDA600B9CD57 /* Preview Content */ = {
+		ECC0CD042615C1DF0084591A /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				EC639E6D2612EDA600B9CD57 /* Preview Assets.xcassets */,
+				ECC0CD052615C1DF0084591A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -78,38 +72,38 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		EC639E622612EDA300B9CD57 /* FlagGenerator */ = {
+		ECC0CCFA2615C1B90084591A /* ActivityIndicator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EC639E722612EDA600B9CD57 /* Build configuration list for PBXNativeTarget "FlagGenerator" */;
+			buildConfigurationList = ECC0CD0A2615C1DF0084591A /* Build configuration list for PBXNativeTarget "ActivityIndicator" */;
 			buildPhases = (
-				EC639E5F2612EDA300B9CD57 /* Sources */,
-				EC639E602612EDA300B9CD57 /* Frameworks */,
-				EC639E612612EDA300B9CD57 /* Resources */,
+				ECC0CCF72615C1B90084591A /* Sources */,
+				ECC0CCF82615C1B90084591A /* Frameworks */,
+				ECC0CCF92615C1B90084591A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = FlagGenerator;
-			productName = FlagGenerator;
-			productReference = EC639E632612EDA300B9CD57 /* FlagGenerator.app */;
+			name = ActivityIndicator;
+			productName = ActivityIndicator;
+			productReference = ECC0CCFB2615C1B90084591A /* ActivityIndicator.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		EC639E5B2612EDA300B9CD57 /* Project object */ = {
+		ECC0CCF32615C1B90084591A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
-					EC639E622612EDA300B9CD57 = {
+					ECC0CCFA2615C1B90084591A = {
 						CreatedOnToolsVersion = 12.4;
 					};
 				};
 			};
-			buildConfigurationList = EC639E5E2612EDA300B9CD57 /* Build configuration list for PBXProject "FlagGenerator" */;
+			buildConfigurationList = ECC0CCF62615C1B90084591A /* Build configuration list for PBXProject "ActivityIndicator" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -117,44 +111,42 @@
 				en,
 				Base,
 			);
-			mainGroup = EC639E5A2612EDA300B9CD57;
-			productRefGroup = EC639E642612EDA300B9CD57 /* Products */;
+			mainGroup = ECC0CCF22615C1B90084591A;
+			productRefGroup = ECC0CCFC2615C1B90084591A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EC639E622612EDA300B9CD57 /* FlagGenerator */,
+				ECC0CCFA2615C1B90084591A /* ActivityIndicator */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		EC639E612612EDA300B9CD57 /* Resources */ = {
+		ECC0CCF92615C1B90084591A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC639E6E2612EDA600B9CD57 /* Preview Assets.xcassets in Resources */,
-				EC639E6B2612EDA600B9CD57 /* Assets.xcassets in Resources */,
+				ECC0CD062615C1DF0084591A /* Preview Assets.xcassets in Resources */,
+				ECC0CD032615C1DF0084591A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		EC639E5F2612EDA300B9CD57 /* Sources */ = {
+		ECC0CCF72615C1B90084591A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC639E7B261307F200B9CD57 /* Subviews.swift in Sources */,
-				EC639E692612EDA300B9CD57 /* ContentView.swift in Sources */,
-				EC639E672612EDA300B9CD57 /* FlagGeneratorApp.swift in Sources */,
-				ECC0CD152615DF810084591A /* ContentViewV1.swift in Sources */,
+				ECC0CD012615C1B90084591A /* ContentView.swift in Sources */,
+				ECC0CCFF2615C1B90084591A /* ActivityIndicatorApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		EC639E702612EDA600B9CD57 /* Debug */ = {
+		ECC0CD082615C1DF0084591A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -215,7 +207,7 @@
 			};
 			name = Debug;
 		};
-		EC639E712612EDA600B9CD57 /* Release */ = {
+		ECC0CD092615C1DF0084591A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -270,44 +262,44 @@
 			};
 			name = Release;
 		};
-		EC639E732612EDA600B9CD57 /* Debug */ = {
+		ECC0CD0B2615C1DF0084591A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"FlagGenerator/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"ActivityIndicator/Preview Content\"";
 				DEVELOPMENT_TEAM = 2T3LUD4AA9;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = FlagGenerator/Info.plist;
+				INFOPLIST_FILE = ActivityIndicator/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.corbu.sergiu.FlagGenerator;
+				PRODUCT_BUNDLE_IDENTIFIER = com.corbu.sergiu.ActivityIndicator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		EC639E742612EDA600B9CD57 /* Release */ = {
+		ECC0CD0C2615C1DF0084591A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"FlagGenerator/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"ActivityIndicator/Preview Content\"";
 				DEVELOPMENT_TEAM = 2T3LUD4AA9;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = FlagGenerator/Info.plist;
+				INFOPLIST_FILE = ActivityIndicator/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.corbu.sergiu.FlagGenerator;
+				PRODUCT_BUNDLE_IDENTIFIER = com.corbu.sergiu.ActivityIndicator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -317,25 +309,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EC639E5E2612EDA300B9CD57 /* Build configuration list for PBXProject "FlagGenerator" */ = {
+		ECC0CCF62615C1B90084591A /* Build configuration list for PBXProject "ActivityIndicator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EC639E702612EDA600B9CD57 /* Debug */,
-				EC639E712612EDA600B9CD57 /* Release */,
+				ECC0CD082615C1DF0084591A /* Debug */,
+				ECC0CD092615C1DF0084591A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EC639E722612EDA600B9CD57 /* Build configuration list for PBXNativeTarget "FlagGenerator" */ = {
+		ECC0CD0A2615C1DF0084591A /* Build configuration list for PBXNativeTarget "ActivityIndicator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EC639E732612EDA600B9CD57 /* Debug */,
-				EC639E742612EDA600B9CD57 /* Release */,
+				ECC0CD0B2615C1DF0084591A /* Debug */,
+				ECC0CD0C2615C1DF0084591A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = EC639E5B2612EDA300B9CD57 /* Project object */;
+	rootObject = ECC0CCF32615C1B90084591A /* Project object */;
 }

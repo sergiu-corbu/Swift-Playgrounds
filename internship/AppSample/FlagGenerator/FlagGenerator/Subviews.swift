@@ -18,6 +18,7 @@ struct Subviews_Previews: PreviewProvider {
 
 struct Options: View {
     @State private var selectedColor = Color.black
+    
     var body: some View {
         HStack {
             VStack {
