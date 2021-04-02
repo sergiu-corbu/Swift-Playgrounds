@@ -101,29 +101,6 @@ struct Subsection: View {
     }
 }
 
-struct CustomButton: View {
-    @Binding var buttonPressed: Bool
-    
-    var text: String
-    var color: Color
-    
-    var body: some View {
-        Button(action: {
-            buttonPressed.toggle()
-        }){
-            Text(text)
-                .foregroundColor(.white)
-                .font(.title2)
-                .bold()
-                .tracking(1)
-        }
-        
-        .frame(width: width - 50, height: 65)
-        .background(color)
-        .cornerRadius(10.0)
-        .padding([.top, .bottom], 10)
-    }
-}
 
 struct VLine: View {
     
