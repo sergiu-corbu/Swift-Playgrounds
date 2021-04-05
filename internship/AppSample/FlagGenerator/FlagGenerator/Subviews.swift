@@ -16,41 +16,54 @@ struct OptionsView: View {
     var color: Color {
         viewModel.flag.components[index].color
     }
- /*   var image: String {
-        viewModel.flag.components[index].image!
-    }*/
     
     var body: some View {
-        VStack {
-            HStack {
+        HStack {
+            VStack {
+                Text("ORIENTATION")
+                    .foregroundColor(.black)
+                    .font(.subheadline)
+                    .padding(.bottom, 20)
+                HStack {
+                    SmallVLine()
+                    SmallHLine()
+                }
+                
+            }.frame(height: 100)
+            
+            VStack {
                 Text("COLOR")
-                    .padding(.leading, 70)
-                Spacer()
-                Text("EMBLEM")
-                    .padding(.trailing, 70)
+                    .font(.subheadline)
+                    .foregroundColor(.black)
+                    .padding(.trailing, 25)
+                    
+                HStack {
+                    Rectangle()
+                        .foregroundColor(color)
+                        .frame(width: 90, height: 27)
+                    
+                    ColorPicker("", selection: colorBinding)
+                        .frame(width: 30)
+                }
+                .padding(.top, 24)
             }
-            .font(.headline)
-            HStack {
-                Rectangle()
-                    .foregroundColor(color)
-                    .frame(width: 100, height: 27)
-                    .padding(.leading, 50)
-                ColorPicker("", selection: colorBinding)
-                    .padding(.trailing, 40)
-                Spacer()
+            
+            VStack {
+                Text("EMBLEM")
+                    .foregroundColor(.black)
+                    .font(.subheadline)
                 Button(action: {
-                    viewModel.setImage(image: image, index: index)
+                      viewModel.setImage(image: image, index: index)
                 }, label: {
                     Image(image)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 60, height: 60)
-                        .padding(.trailing, 90)
+                        .frame(width: 50, height: 50)
                 })
-                
             }
         }
-        .frame(width: width - 50 , height: 60)
+        .frame(width: width - 60 , height: 60)
+        
     }
     var colorBinding: Binding<Color> {
         return .init {
@@ -80,9 +93,8 @@ struct SubsectionView: View {
                 Divider()
                 Button(action: { HTapped.toggle()}, label: { HLine() })
             }
-            .padding(.bottom, 10)
         }
-        .frame(width: width - 50 , height: 60)
+        .frame(width: width - 60 , height: 60)
     }
 }
 struct VLine: View {
@@ -98,7 +110,7 @@ struct VLine: View {
         }
     }
 }
-struct  HLine: View {
+struct HLine: View {
     var body: some View {
         VStack {
             Rectangle()
@@ -110,21 +122,49 @@ struct  HLine: View {
         .padding(.leading, 55)
     }
 }
+
+struct SmallVLine: View {
+    
+    var body: some View {
+        HStack {
+            Rectangle()
+                .vProperties()
+            Rectangle()
+                .vProperties()
+                .padding(.leading, -5)
+        }
+    }
+}
+struct SmallHLine: View {
+    var body: some View {
+        VStack {
+            Rectangle()
+                .hProperties()
+                
+            Rectangle()
+                .hProperties()
+                .padding(.top, -5)
+        }
+    }
+}
 extension Rectangle {
     func vProperties() -> some View {
         self
             .foregroundColor(.blue)
-            .frame(width: 13, height: 35)
+            .frame(width: 13, height: 30)
     }
     
     func hProperties() -> some View {
         self
             .foregroundColor(.blue)
-            .frame(width: 35, height: 13)
+            .frame(width: 30, height: 13)
     }
 }
+
 struct Subviews_Previews: PreviewProvider {
     static var previews: some View {
-        OptionsView(viewModel: ViewModel(), index: 0)
+        SubsectionView(HTapped: .constant(false), VTapped: .constant(false))
+        //OptionsView(viewModel: ViewModel(), index: 0)
+       
     }
 }

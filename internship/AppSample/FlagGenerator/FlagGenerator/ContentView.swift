@@ -11,9 +11,11 @@ struct ContentView: View {
     @State private var commitPressed: Bool = false
     
     @ObservedObject var viewModel = ViewModel()
+    
     var flag: Flag {
         return viewModel.flag
     }
+    
     var body: some View {
         
         VStack {
@@ -26,13 +28,13 @@ struct ContentView: View {
                         }
                     }
                 }
-                .frame(width: 220, height: 130)
+                .frame(width: 220, height: 140)
                 .background(Color(UIColor.systemGray6))
                 .cornerRadius(5)
             }
-            .frame(width: width, height: 250)
+            .frame(width: width, height: 200)
             .background(Color.white)
-            .edgesIgnoringSafeArea(.top)
+            .padding(.bottom, 10)
             
             ScrollView(showsIndicators: false) {
                 VStack {
@@ -61,9 +63,10 @@ struct ContentView: View {
                 Spacer()
             }// main vstack
             .background(Color(UIColor.systemGray5))
-            .edgesIgnoringSafeArea(.all)
+            //.edgesIgnoringSafeArea(.all)
         }
         .background(Color(UIColor.systemGray5))
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
@@ -111,8 +114,8 @@ struct ContentView_Previews: PreviewProvider {
 extension View {
     func viewProperties () -> some View {
         self
-            .padding(.top, 25)
-            .padding(.bottom, 35)
+            .padding(.top, 15)
+            .padding(.bottom, 25)
             .background(Color.white)
             .cornerRadius(15)
     }
@@ -132,17 +135,19 @@ extension Text {
 extension Button {
     func addStripeProperties () -> some View {
         self
-            .frame(width: width - 100, height: 50)
+            .frame(width: width - 120, height: 40)
             .padding([.top, .bottom], 10)
             .background(Color.blue)
-            .cornerRadius(12.0)
+            .cornerRadius(10.0)
+            .padding(.top, 20)
     }
     
     func commitProperties () -> some View {
         self
-            .frame(width: width - 100, height: 50)
+            .frame(width: width - 120, height: 40)
             .padding([.top, .bottom], 10)
             .background(Color.green)
             .cornerRadius(10.0)
+            .padding(.top, 7)
     }
 }
