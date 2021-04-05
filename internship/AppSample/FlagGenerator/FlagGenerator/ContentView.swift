@@ -4,103 +4,102 @@ let height = UIScreen.main.bounds.height
 let width = UIScreen.main.bounds.width
 
 struct ContentView: View {
-    @State private var Htapped = false
-    @State private var VTapped = false
-    @State private var StripebuttonPressed: Bool = false
-    @State private var CommitbuttonPressed: Bool = false
     
-    @ObservedObject var flag = Flag()
+    @State private var hTapped = false
+    @State private var vTapped = false
+    @State private var addStripePressed: Bool = false
+    @State private var commitPressed: Bool = false
     
+    @ObservedObject var viewModel = ViewModel()
+    var flag: Flag {
+        return viewModel.flag
+    }
     var body: some View {
+        
         VStack {
             VStack {
                 VStack {
-                    HStack{ //add spacing 0
-                        ForEach(0..<flag.components.count, id: \.self) { rect in
-                            flag.components[rect]
+                    HStack(spacing: 0){ //add spacing 0
+                        ForEach(0..<flag.components.count, id: \.self) { index in
+                            let _flag = flag.components[index]
+                            StripeView(stripe: _flag)
                         }
                     }
-                   
                 }
                 .frame(width: 220, height: 130)
                 .background(Color(UIColor.systemGray6))
+                .cornerRadius(5)
             }
             .frame(width: width, height: 250)
             .background(Color.white)
             .edgesIgnoringSafeArea(.top)
             
-            VStack {
-                if StripebuttonPressed {
-                    Options()
-                        .viewProperties()
-                }
-                Subsection(HTapped: $Htapped, VTapped: $VTapped)
-                    .viewProperties()
-                
-                if Htapped {
-                    Button(action: {
-                        flag.add(item: Stripe(color: Color.red, image: ""))
-                    }, label: {
-                        Text("Add Stripe")
-                            .textProperties()
-                    })
-                    .addStripeProperties()
-                    
-                    Button(action: {
-                    }, label: {
-                        Text("Commit Section")
-                            .textProperties()
-                    })
-                    .commitProperties()
-                }
-                
-               else if VTapped {
-                    if !Htapped {
-                        Button(action: {
-                            flag.add(item: Stripe(color: Color.blue, image: ""))
-                        }, label: {
-                            Text("Add Stripe")
-                                .textProperties()
-                        })
-                        .addStripeProperties()
-                        
-                        Button(action: {
-                        }, label: {
-                            Text("Commit Section")
-                                .textProperties()
-                        })
-                        .commitProperties()
+            ScrollView(showsIndicators: false) {
+                VStack {
+                    if addStripePressed {
+                        ForEach(0..<flag.components.count, id: \.self) { index in
+                            OptionsView(viewModel: viewModel, index: index)
+                                .viewProperties()
+                        }
                     }
                     
-                }
-            } // 2nd vstack
-            .padding(.top, -25)
-            
-            
-            Spacer()
-        }// main vstack
+                    SubsectionView(HTapped: $hTapped, VTapped: $vTapped)
+                        .viewProperties()
+                    
+                    if hTapped {
+                        Button(action: {
+                            addStripePressed = true
+                            viewModel.add(item: Stripe())
+                        }, label: { Text("Add Stripe")
+                            .textProperties() }) .addStripeProperties()
+                        
+                        Button(action: {
+                                addStripePressed = false }, label: { Text("Commit Section")
+                                    .textProperties()}) .commitProperties()
+                    }
+                } // 2nd vstack
+                Spacer()
+            }// main vstack
+            .background(Color(UIColor.systemGray5))
+            .edgesIgnoringSafeArea(.all)
+        }
         .background(Color(UIColor.systemGray5))
-        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
-struct Stripe: View {
-    var color: Color
+struct Stripe {
+    var color: Color = Color.red
     var image: String?
+}
+
+struct StripeView: View {
+    let stripe: Stripe
+    //var orientation: Bool
     var body: some View {
         Rectangle()
-            .foregroundColor(color)
-            .overlay(Image(image ?? "")
+            .foregroundColor(stripe.color)
+            .overlay(Image(stripe.image ?? "")
                         .resizable()
                         .frame(width: 45, height: 45))
     }
 }
 
-class Flag: ObservableObject {
-    @Published var components: [Stripe] = []
+struct Flag {
+    var components: [Stripe] = []
+}
+
+class ViewModel: ObservableObject {
+    @Published var flag: Flag = Flag()
     
     func add(item: Stripe) {
-        components.append(item)
+        flag.components.append(item)
+    }
+    
+    func setColor(color: Color, index: Int) {
+        flag.components[index].color = color
+    }
+    func setImage(image: String, index: Int) {
+        flag.components[index].image = image
     }
 }
 
@@ -109,7 +108,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
 extension View {
     func viewProperties () -> some View {
         self
@@ -119,7 +117,6 @@ extension View {
             .cornerRadius(15)
     }
 }
-
 extension Color {
     static let deepBlue = Color("deep blue")
 }
@@ -149,4 +146,3 @@ extension Button {
             .cornerRadius(10.0)
     }
 }
-

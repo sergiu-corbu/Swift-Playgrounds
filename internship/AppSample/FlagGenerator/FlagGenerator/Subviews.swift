@@ -7,34 +7,20 @@
 
 import SwiftUI
 
-struct Subviews_Previews: PreviewProvider {
-    static var previews: some View {
-        Options()
-       // CustomButton(text: "MEe", color: Color.gray)
+struct OptionsView: View {
+    
+    @ObservedObject var viewModel: ViewModel
+    
+    let image: String = "img"
+    let index: Int
+    var color: Color {
+        viewModel.flag.components[index].color
     }
-}
-
-
-
-struct Options: View {
-    @State private var selectedColor = Color.black
+ /*   var image: String {
+        viewModel.flag.components[index].image!
+    }*/
     
     var body: some View {
-        HStack {
-            VStack {
-                Text("COLOR")
-                    .font(.headline)
-                Rectangle()
-                    .hProperties()
-            }
-            
-            VStack {
-                Text("EMBLEM")
-                    .font(.headline)
-                Image(systemName: "swift")
-            }
-        }
-        .frame(width: width - 50 , height: 60)
         VStack {
             HStack {
                 Text("COLOR")
@@ -46,26 +32,36 @@ struct Options: View {
             .font(.headline)
             HStack {
                 Rectangle()
-                    .foregroundColor(.blue)
+                    .foregroundColor(color)
                     .frame(width: 100, height: 27)
-                    .padding(.top, 20)
                     .padding(.leading, 50)
-                ColorPicker("Select a color", selection: $selectedColor)
+                ColorPicker("", selection: colorBinding)
+                    .padding(.trailing, 40)
                 Spacer()
-                Image("img")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 80, height: 80)
-                    .padding(.trailing, 70)
+                Button(action: {
+                    viewModel.setImage(image: image, index: index)
+                }, label: {
+                    Image(image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 60, height: 60)
+                        .padding(.trailing, 90)
+                })
+                
             }
         }
         .frame(width: width - 50 , height: 60)
     }
- 
+    var colorBinding: Binding<Color> {
+        return .init {
+            return color
+        } set: { (newValue) in
+            self.viewModel.setColor(color: newValue, index: index)
+        }
+    }
 }
 
-
-struct Subsection: View {
+struct SubsectionView: View {
     
     @Binding var HTapped: Bool
     @Binding var VTapped: Bool
@@ -79,29 +75,16 @@ struct Subsection: View {
                     .foregroundColor(.blue)
                     .padding(.bottom, 10)
             }
-            
             HStack {
-                Button(action: {
-                    VTapped.toggle()
-                }, label: {
-                    VLine()
-                })
-                
+                Button(action: { VTapped.toggle()}, label: { VLine() })
                 Divider()
-                
-                Button(action: {
-                    HTapped.toggle()
-                }, label: {
-                    HLine()
-                })
+                Button(action: { HTapped.toggle()}, label: { HLine() })
             }
             .padding(.bottom, 10)
         }
         .frame(width: width - 50 , height: 60)
     }
 }
-
-
 struct VLine: View {
     
     var body: some View {
@@ -115,7 +98,6 @@ struct VLine: View {
         }
     }
 }
-
 struct  HLine: View {
     var body: some View {
         VStack {
@@ -128,7 +110,6 @@ struct  HLine: View {
         .padding(.leading, 55)
     }
 }
-
 extension Rectangle {
     func vProperties() -> some View {
         self
@@ -140,5 +121,10 @@ extension Rectangle {
         self
             .foregroundColor(.blue)
             .frame(width: 35, height: 13)
+    }
+}
+struct Subviews_Previews: PreviewProvider {
+    static var previews: some View {
+        OptionsView(viewModel: ViewModel(), index: 0)
     }
 }
