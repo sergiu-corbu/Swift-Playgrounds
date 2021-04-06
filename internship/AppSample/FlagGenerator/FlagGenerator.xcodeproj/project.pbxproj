@@ -11,8 +11,14 @@
 		EC639E692612EDA300B9CD57 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC639E682612EDA300B9CD57 /* ContentView.swift */; };
 		EC639E6B2612EDA600B9CD57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC639E6A2612EDA600B9CD57 /* Assets.xcassets */; };
 		EC639E6E2612EDA600B9CD57 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC639E6D2612EDA600B9CD57 /* Preview Assets.xcassets */; };
-		EC639E7B261307F200B9CD57 /* Subviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC639E7A261307F200B9CD57 /* Subviews.swift */; };
-		ECC0CD152615DF810084591A /* ContentViewV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC0CD142615DF810084591A /* ContentViewV1.swift */; };
+		EC639E7B261307F200B9CD57 /* AddSubsectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC639E7A261307F200B9CD57 /* AddSubsectionView.swift */; };
+		EC6EB9C5261C2FCE0009118A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EB9C4261C2FCE0009118A /* Model.swift */; };
+		EC6EB9C8261C30AE0009118A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EB9C7261C30AE0009118A /* Extensions.swift */; };
+		EC6EB9CB261C30ED0009118A /* StripeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EB9CA261C30ED0009118A /* StripeViewModel.swift */; };
+		EC6EB9D3261C315B0009118A /* StripeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EB9D2261C315B0009118A /* StripeView.swift */; };
+		EC6EB9D6261C31610009118A /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EB9D5261C31610009118A /* FlagView.swift */; };
+		EC6EB9D9261C31690009118A /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EB9D8261C31690009118A /* SectionView.swift */; };
+		EC6EB9DE261C31D80009118A /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6EB9DD261C31D80009118A /* OptionsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,8 +28,14 @@
 		EC639E6A2612EDA600B9CD57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC639E6D2612EDA600B9CD57 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EC639E6F2612EDA600B9CD57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EC639E7A261307F200B9CD57 /* Subviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subviews.swift; sourceTree = "<group>"; };
-		ECC0CD142615DF810084591A /* ContentViewV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewV1.swift; sourceTree = "<group>"; };
+		EC639E7A261307F200B9CD57 /* AddSubsectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubsectionView.swift; sourceTree = "<group>"; };
+		EC6EB9C4261C2FCE0009118A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		EC6EB9C7261C30AE0009118A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		EC6EB9CA261C30ED0009118A /* StripeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeViewModel.swift; sourceTree = "<group>"; };
+		EC6EB9D2261C315B0009118A /* StripeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeView.swift; sourceTree = "<group>"; };
+		EC6EB9D5261C31610009118A /* FlagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
+		EC6EB9D8261C31690009118A /* SectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
+		EC6EB9DD261C31D80009118A /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +70,10 @@
 			children = (
 				EC639E662612EDA300B9CD57 /* FlagGeneratorApp.swift */,
 				EC639E682612EDA300B9CD57 /* ContentView.swift */,
-				ECC0CD142615DF810084591A /* ContentViewV1.swift */,
-				EC639E7A261307F200B9CD57 /* Subviews.swift */,
+				EC6EB9C4261C2FCE0009118A /* Model.swift */,
+				EC6EB9DB261C319E0009118A /* View */,
+				EC6EB9C7261C30AE0009118A /* Extensions.swift */,
+				EC6EB9CA261C30ED0009118A /* StripeViewModel.swift */,
 				EC639E6A2612EDA600B9CD57 /* Assets.xcassets */,
 				EC639E6F2612EDA600B9CD57 /* Info.plist */,
 				EC639E6C2612EDA600B9CD57 /* Preview Content */,
@@ -73,6 +87,18 @@
 				EC639E6D2612EDA600B9CD57 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EC6EB9DB261C319E0009118A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EC6EB9D2261C315B0009118A /* StripeView.swift */,
+				EC6EB9D5261C31610009118A /* FlagView.swift */,
+				EC6EB9D8261C31690009118A /* SectionView.swift */,
+				EC6EB9DD261C31D80009118A /* OptionsView.swift */,
+				EC639E7A261307F200B9CD57 /* AddSubsectionView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,10 +170,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC639E7B261307F200B9CD57 /* Subviews.swift in Sources */,
+				EC6EB9C8261C30AE0009118A /* Extensions.swift in Sources */,
+				EC639E7B261307F200B9CD57 /* AddSubsectionView.swift in Sources */,
+				EC6EB9D9261C31690009118A /* SectionView.swift in Sources */,
+				EC6EB9DE261C31D80009118A /* OptionsView.swift in Sources */,
+				EC6EB9D3261C315B0009118A /* StripeView.swift in Sources */,
 				EC639E692612EDA300B9CD57 /* ContentView.swift in Sources */,
+				EC6EB9CB261C30ED0009118A /* StripeViewModel.swift in Sources */,
 				EC639E672612EDA300B9CD57 /* FlagGeneratorApp.swift in Sources */,
-				ECC0CD152615DF810084591A /* ContentViewV1.swift in Sources */,
+				EC6EB9D6261C31610009118A /* FlagView.swift in Sources */,
+				EC6EB9C5261C2FCE0009118A /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
